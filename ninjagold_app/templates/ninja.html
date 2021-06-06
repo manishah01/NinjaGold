@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'ninja.css' %}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ninja Money</title>
+</head>
+<body>
+    <div id="wrapper">
+        <span>YOUR GOLD: {{request.session.total_gold}}</span>
+        <div id="buildingtypes">
+            <form action="/process_money" method="post" class="type">
+                {% csrf_token %} 
+                <img src="{% static 'images/farm.png' %}" />
+                <h1>Farm</h1>
+                <p>(earn 10-20 gold)</p>
+                <input type="hidden" name="type" value="farm">
+                <button>Find Gold!</button>
+                </form>
+
+            <form action="/process_money" method="post" class="type">
+                {% csrf_token %} 
+                <img src="{% static 'images/cave.png' %}" />
+                <h1>Cave</h1>
+                <p>(earn 5-10 gold)</p>
+                <input type="hidden" name="type" value="cave">
+                <button>Find Gold!</button>
+                </form>
+
+            <form action="/process_money" method="post" class="type">
+                {% csrf_token %} 
+                <img src="{% static 'images/home.png' %}" />
+                <h1>House</h1>
+                <p>(earn 2-5 gold)</p>
+                <input type="hidden" name="type" value="house">
+                <button>Find Gold!</button>
+                </form>
+                
+            <form action="/process_money" method="post" class="type">
+                {% csrf_token %} 
+                <img src="{% static 'images/casino.png' %}" />
+                <h1>Casino</h1>
+                <p>(earn/lose 0-50 gold)</p>
+                <input type="hidden" name="type" value="casino">
+                <button>Find Gold!</button>
+                </form>
+        </div>
+        <a href="/reset">RESET</a>
+
+        <span> ACTIVITIES:</span>
+        <div id ="statements">
+            {% for statement in activities%}
+                {% if 'lost' in statement %}
+                <p class ="lost">{{statement}}</p>
+                {% else %}
+                <p>{{statement}}<p>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
